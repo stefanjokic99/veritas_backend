@@ -13,6 +13,7 @@ services:
         - veritas_db
     tty: true
     stdin_open: true
+
   veritas_db:
     image: mcr.microsoft.com/mssql/server:2019-CU13-ubuntu-20.04
     volumes:
@@ -21,4 +22,4 @@ services:
         - "1434:1433"
     environment:
         - ACCEPT_EULA=Y
-        - MSSQL_SA_PASSWORD=Password123
+        - SA_PASSWORD=Password123
