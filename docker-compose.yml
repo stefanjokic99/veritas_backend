@@ -14,12 +14,39 @@ services:
     tty: true
     stdin_open: true
 
+  courtcase:
+    image: ${DOCKER_REGISTRY-}courtcase
+    build:
+      context: .
+      dockerfile: CourtCase/Dockerfile
+
+    volumes:
+        - ./courtcase:/app
+    depends_on:
+        - veritas_backend
+        - courtcase_db
+    tty: true
+    stdin_open: true
+
   veritas_db:
     image: mcr.microsoft.com/mssql/server:2019-CU13-ubuntu-20.04
+    container_name: veritas_db
     volumes:
-        - ./db-data:/var/opt/mssql/data
+        - ./veritas-db-data:/var/opt/mssql/data
     ports:
         - "1434:1433"
     environment:
         - ACCEPT_EULA=Y
         - SA_PASSWORD=Password123
+
+  courtcase_db:
+    image: mcr.microsoft.com/mssql/server:2019-CU13-ubuntu-20.04
+    container_name: courtcase_db
+    volumes:
+        - ./courtcase-db-data:/var/opt/mssql/data
+    ports:
+        - "1435:1433"
+    environment:
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=Password123
+        

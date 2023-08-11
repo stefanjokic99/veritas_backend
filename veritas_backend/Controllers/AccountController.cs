@@ -89,7 +89,7 @@ namespace veritas_backend.Controllers
         {
             return new UserDto
             {
-                DisplayName = user.FirstName + " " + user.LastName,
+                DisplayName = $"{user.FirstName} {user.LastName}",
                 Token = _tokenService.CreateToken(user),
                 UserName = user.UserName
             };

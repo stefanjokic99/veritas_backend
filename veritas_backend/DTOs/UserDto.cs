@@ -1,6 +1,6 @@
 ﻿namespace veritas_backend.DTOs
 {
-    public class UserDto
+    public class UserDto 
     {
         public string DisplayName { get; set; }
         public string Token { get; set; }

@@ -1,4 +1,4 @@
-namespace veritas_backend
+namespace CourtCase
 {
     public class WeatherForecast
     {

@@ -1,22 +1,13 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
+using CourtCase.Extensions;
+using CourtCasePersistance;
 using Microsoft.EntityFrameworkCore;
-using veritas_backend.Extensions;
 using veritas_backend.Middleware;
-using veritas_backend.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers(opt =>
-{
-    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-    opt.Filters.Add(new AuthorizeFilter(policy));
-}
-);
-builder.Services.AddPluginServices(builder.Configuration);
+builder.Services.AddControllers();
 builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.AddIdentityServices(builder.Configuration);
 
 var app = builder.Build();
 
@@ -33,9 +24,6 @@ app.UseHttpsRedirection();
 
 app.UseCors("CorsPolicy");
 
-app.UseAuthentication();
-app.UseAuthorization();
-
 app.MapControllers();
 
 using var scope = app.Services.CreateScope();
@@ -43,7 +31,7 @@ var services = scope.ServiceProvider;
 
 try
 {
-    var context = services.GetRequiredService<DataContext>();
+    var context = services.GetRequiredService<CourtCaseDataContext>();
     await context.Database.MigrateAsync();
 }
 catch (Exception ex)
