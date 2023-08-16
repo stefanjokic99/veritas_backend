@@ -30,5 +30,5 @@ public partial class Case
 
     public virtual ICollection<Hearing> Hearings { get; } = new List<Hearing>();
 
-    public virtual SubjectType Type { get; set; } = null!;
+    public virtual CaseType Type { get; set; } = null!;
 }

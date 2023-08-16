@@ -1,7 +1,7 @@
 using CourtCase.Extensions;
 using CourtCasePersistance;
 using Microsoft.EntityFrameworkCore;
-using veritas_backend.Middleware;
+using CourtCase.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +33,7 @@ try
 {
     var context = services.GetRequiredService<CourtCaseDataContext>();
     await context.Database.MigrateAsync();
+    await Seed.SeedData(context);
 }
 catch (Exception ex)
 {

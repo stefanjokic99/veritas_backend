@@ -1,4 +1,4 @@
-﻿namespace veritas_backend.DTOs.Core
+﻿namespace CourtCase.DTOs
 {
     public class Result<T>
     {

@@ -44,7 +44,7 @@ public partial class CourtCaseDataContext : DbContext
 
     public virtual DbSet<JobPerType> JobPerTypes { get; set; }
 
-    public virtual DbSet<SubjectType> SubjectTypes { get; set; }
+    public virtual DbSet<CaseType> CaseTypes { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -451,12 +451,12 @@ public partial class CourtCaseDataContext : DbContext
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_JOBPERTY_RELATIONS_SUBJECTT");
         });
-
-        modelBuilder.Entity<SubjectType>(entity =>
+            
+        modelBuilder.Entity<CaseType>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_SUBJECTTYPE");
 
-            entity.ToTable("SubjectType");
+            entity.ToTable("CaseType");
 
             entity.Property(e => e.Id)
                 .HasMaxLength(4)

@@ -1,12 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
+using System;
+using System.Security.Claims;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Web;
 using veritas_backend.ActionFilterAttributes;
+using System.Text;
 
 namespace veritas_backend.Controllers
 {
     [ValidatePluginExists]
-    public class ProxyController : BaseApiController
+    public class ProxyController : BaseProxyApiController
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
@@ -15,45 +21,73 @@ namespace veritas_backend.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        [AllowAnonymous]
         [HttpGet("{pluginName}/{url}")]
-        public async Task<IActionResult> Get(string pluginName, string url)
+        public async Task<IActionResult> Get(string pluginName, string url, [FromQuery] Dictionary<string, string> queryParams)
         {   
             var httpClient = _httpClientFactory.CreateClient($"{pluginName}");
+            var urlDecoded = HttpUtility.UrlDecode(url);
 
-            return await HandleResult(await httpClient.GetAsync(url));
+            var queryString = string.Join("&", queryParams.Select(kv => $"{kv.Key}={kv.Value}"));
+            var finalUrl = $"{urlDecoded}?{queryString}";
+
+            return await HandleResult(await httpClient.GetAsync(finalUrl));
         }
 
 
-        [AllowAnonymous]
         [HttpPost("{pluginName}/{url}")]
-        public async Task<IActionResult> Post(string pluginName, string url, [FromBody] object data)
+        public async Task<IActionResult> Post(string pluginName, string url, [FromBody] object dataObj)
         {
             var httpClient = _httpClientFactory.CreateClient($"{pluginName}");
-            var json = JsonSerializer.Serialize(data);
+            var urlDecoded= HttpUtility.UrlDecode(url);
+
+            var requestBody = new
+            {
+                Data = dataObj,
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+            };
+
+            var json = JsonSerializer.Serialize(requestBody);
             HttpContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
-            return await HandleResult(await httpClient.PostAsync(url, content));
+            return await HandleResult(await httpClient.PostAsync(urlDecoded, content));
         }
 
-        [AllowAnonymous]
         [HttpPut("{pluginName}/{url}")]
-        public async Task<IActionResult> Patch(string pluginName, string url, [FromBody] object data)
+        public async Task<IActionResult> Patch(string pluginName, string url, [FromBody] object dataObj)
         {
             var httpClient = _httpClientFactory.CreateClient($"{pluginName}");
-            var json = JsonSerializer.Serialize(data);
+            var urlDecoded = HttpUtility.UrlDecode(url);
+
+            var requestBody = new
+            {
+                Data = dataObj,
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+            };
+
+            var json = JsonSerializer.Serialize(requestBody);
             HttpContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
-            return await HandleResult(await httpClient.PatchAsync(url, content));
+            return await HandleResult(await httpClient.PatchAsync(urlDecoded, content));
         }
 
-        [AllowAnonymous]
         [HttpDelete("{pluginName}/{url}")]
-        public async Task<IActionResult> SendMessage(string pluginName, string url)
+        public async Task<IActionResult> Delete(string pluginName, string url, [FromBody] object identificationParams)
         {
             var httpClient = _httpClientFactory.CreateClient($"{pluginName}");
+            var urlDecoded = HttpUtility.UrlDecode(url);
 
-            return await HandleResult(await httpClient.DeleteAsync(url)); 
+            var requestBody = new
+            {
+                Data = identificationParams,
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+            };
+            var json = JsonSerializer.Serialize(requestBody);
+
+            var request = new HttpRequestMessage(HttpMethod.Delete, urlDecoded);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            request.Content = new StringContent(json, Encoding.UTF8, "application/json"); ;
+
+            return await HandleResult(await httpClient.SendAsync(request)); 
         }
 
     }

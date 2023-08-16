@@ -4,11 +4,11 @@ public partial class Employee
 {
     public string Id { get; set; } = null!;
 
+    public string Forename { get; set; } = null!;
+
     public string Surename { get; set; } = null!;
 
     public string? ParentName { get; set; }
-
-    public string Forename { get; set; } = null!;
 
     public string Sex { get; set; } = null!;
 

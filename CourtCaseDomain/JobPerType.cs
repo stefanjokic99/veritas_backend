@@ -10,5 +10,5 @@ public partial class JobPerType
 
     public virtual JobCatalog Job { get; set; } = null!;
 
-    public virtual SubjectType Type { get; set; } = null!;
+    public virtual CaseType Type { get; set; } = null!;
 }

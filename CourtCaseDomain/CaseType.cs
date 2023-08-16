@@ -1,6 +1,6 @@
 ﻿namespace CourtCaseDomain;
 
-public partial class SubjectType
+public partial class CaseType
 {
     public string Id { get; set; } = null!;
 

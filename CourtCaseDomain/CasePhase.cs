@@ -10,5 +10,5 @@ public partial class CasePhase
 
     public virtual ICollection<CasePhaseHistory> CasePhaseHistories { get; } = new List<CasePhaseHistory>();
 
-    public virtual SubjectType Type { get; set; } = null!;
+    public virtual CaseType Type { get; set; } = null!;
 }
