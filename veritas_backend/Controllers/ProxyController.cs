@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
-using System;
 using System.Security.Claims;
-using System.Text.Encodings.Web;
+using System.Text;
 using System.Text.Json;
 using System.Web;
 using veritas_backend.ActionFilterAttributes;
-using System.Text;
 
 namespace veritas_backend.Controllers
 {
