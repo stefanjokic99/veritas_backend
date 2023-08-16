@@ -17,8 +17,4 @@
     <ProjectReference Include="..\CourtCasePersistance\CourtCasePersistance.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Case\" />
-  </ItemGroup>
-
 </Project>
