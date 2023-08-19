@@ -12,6 +12,6 @@ Currently, the Core project contains:
 
 Currently, the Plugin project contains:
   * Developed a complete Domain for a given problem
-  * Persistence layer (EF Core, generic implementation of Repository and UnitOfWork pattern)
+  * Persistance layer (EF Core, generic implementation of Repository and UnitOfWork pattern)
   * The Application layer (business layer, implemented with CQRS pattern) contains the basic creation of an employee in the system with CRUD operations for a Court Case (the simplest case of write was done without using further business logic, case history,...) (filter and paging were done for reading)
   * The API layer passes tasks to the Application layer using the Mediator Pattern
