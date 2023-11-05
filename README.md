@@ -17,12 +17,21 @@ Currently, the Plugin project contains:
   * The Application layer (business layer, implemented with CQRS pattern) contains the basic creation of an employee in the system with CRUD operations for a Court Case (the simplest case of write was done without using further business logic, case history,...) (filter and paging were done for reading)
   * The API layer passes tasks to the Application layer using the Mediator Pattern
 
-# Installation
+## Installation
  * Install the Visual Studio and the .NET 7 SDK
  * Clone or download this repository and open the Veritas.sln file in Visual Studio
  * Restore the NuGet packages and run the migrations for the core project
  * Build and run the plugin project from Visual Studio
-# Usage
+
+OR:
+
+ * Install Docker and run:
+   ```bash
+   docker-compose up --build
+## Usage
  * The plugin project will expose endpoints for interacting with the core project
  * You can use tools such as Postman or Swagger to test the API requests and responses
  * You can also use the Veritas Frontend project to access the system through a web interface
+
+## Contributing 
+If you wish to contribute to the development of this project, feel free to open a pull request or report issues on this repository.
