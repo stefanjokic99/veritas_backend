@@ -18,16 +18,11 @@ Currently, the Plugin project contains:
   * The API layer passes tasks to the Application layer using the Mediator Pattern
 
 ## Installation
- * Install the Visual Studio and the .NET 7 SDK
+ * Install the Visual Studio, .NET 7 SDK, Docker, and Container tools for Visual Studio
  * Clone or download this repository and open the Veritas.sln file in Visual Studio
  * Restore the NuGet packages and run the migrations for the core project
  * Build and run the plugin project from Visual Studio
 
-OR:
-
- * Install Docker and run:
-   ```bash
-   docker-compose up --build
 ## Usage
  * The plugin project will expose endpoints for interacting with the core project
  * You can use tools such as Postman or Swagger to test the API requests and responses
